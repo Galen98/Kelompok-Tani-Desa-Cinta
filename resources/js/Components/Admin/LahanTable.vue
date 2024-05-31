@@ -52,6 +52,7 @@ console.log(data);
             <tr>
               <th scope="col" class="px-6 py-4">#</th>
               <th scope="col" class="px-6 py-4">Nama Pemilik Lahan</th>
+              <th scope="col" class="px-6 py-4">Nomor Telfon</th>
               <th scope="col" class="px-6 py-4">Total Lahan</th>
               <th scope="col" class="px-6 py-4">Action</th>
             </tr>
@@ -64,6 +65,7 @@ console.log(data);
             <tr class="border-b border-gray-400 dark:border-gray/10" v-else v-for="(item, index) in data" :key="index">
             <td class="whitespace-nowrap px-6 py-4 font-medium">{{ index+1 }}</td>
             <td class="whitespace-nowrap px-6 py-4 capitalize">{{item.name}}</td>
+            <td class="whitespace-nowrap px-6 py-4 capitalize">{{item.no_telfon}}</td>
             <td class="whitespace-nowrap px-6 py-4">
                <p v-if="item.jumlah_lahan == 0" class="text-rose-500">Tidak ada lahan</p>
                <p v-else>{{ item.jumlah_lahan }} Lahan</p>
@@ -76,7 +78,7 @@ console.log(data);
             </Link>
             <Link :href="`/dashboard/lahan-page/edit/${item.id}`" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
                 <i class="fa-regular fa-pen-to-square"></i> 
-               Edit
+               Edit Profil
             </Link>
             <button type="button" @click="deleteItem(item.id)" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
                 <i class="fa-solid fa-trash"></i> 

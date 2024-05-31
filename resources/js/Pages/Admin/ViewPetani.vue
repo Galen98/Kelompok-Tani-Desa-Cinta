@@ -9,11 +9,13 @@ import { ref } from 'vue'
 import Modal from '@/Components/Modal.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Checkbox from '@/Components/Checkbox.vue';
+import BackButton from '@/Components/BackButton.vue';
 
 const data = usePage().props
 const petani = useForm({
     name : data.petani.name,
-    email : data.petani.email
+    email : data.petani.email,
+    no_telfon: data.petani.no_telfon
 });
 
 const pekerjaan = ref('')
@@ -39,6 +41,7 @@ console.log(data);
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{data.header}}</h2>
+            <BackButton/>
         </template>
             
         <div class="py-12">
@@ -72,6 +75,19 @@ console.log(data);
                                 v-model="petani.email"
                             /> 
                             </div>
+
+                            <div>
+                                <InputLabel for="no_telfon" value="No Telfon" /> 
+                                <TextInput
+                                id="no_telfon"
+                                type="text"
+                                class="mt-1 block w-full capitalize text-gray-500"
+                                readonly
+                                autofocus
+                                autocomplete="no_telfon"
+                                v-model="petani.no_telfon"
+                            /> 
+                            </div>
                             
                         </div>
                         <hr class="mt-6"/>
@@ -93,7 +109,7 @@ console.log(data);
                         </thead>
                         <tbody>
                         <tr class="border-b border-gray-400 dark:border-gray/10" v-if="data.pekerjaan_lahan.length == 0">
-                        <td class="whitespace-nowrap text-center px-6 py-4 font-medium" colspan="4">Data pekerjaan Kosong</td>    
+                        <td class="whitespace-nowrap text-center px-6 py-4 font-medium" colspan="5">Data pekerjaan Kosong</td>    
                         </tr>
                         <tr v-else class="border-b border-gray-400 dark:border-gray/10" v-for="(item, index) in data.pekerjaan_lahan" :key="index">
                         <td class="whitespace-nowrap px-6 py-4 font-medium">{{ index+1 }}</td>
@@ -104,7 +120,7 @@ console.log(data);
                             <p v-else-if="item.lahan.status == 1">Pekerjaan selesai pada {{format(new Date(item.lahan.pekerjaan_selesai), "dd/MM/yyyy")}}</p>
                         </td>
                         <td class="whitespace-nowrap px-6 py-4 font-medium capitalize">
-                        <button @click="lookDetail(item.lahan.id)" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"><i class="fa-solid fa-circle-info"></i> Lihat</button>
+                        <button @click="lookDetail(item.lahan.id)" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"><i class="fa-solid fa-circle-info"></i> Detail Pekerjaan</button>
                         </td>
                         </tr>
                         </tbody>

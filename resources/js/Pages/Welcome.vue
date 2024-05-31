@@ -75,7 +75,7 @@ const showToast = () => {
                 v-if="$page.props.auth.user"
                 :href="route('dashboard')"
                 class="font-semibold dark:text-gray-800 dark:text-gradient-to-bl hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-600 focus:outline focus:outline-2 focus:rounded-sm"
-                >Dashboard</Link
+                >Home Page</Link
             >
 
             <template v-else>

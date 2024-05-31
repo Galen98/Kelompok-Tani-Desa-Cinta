@@ -4,11 +4,13 @@ import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
+import BackButton from '@/Components/BackButton.vue';
 
 const data = usePage().props
 const petani = useForm({
     name : data.petani.name,
     email : data.petani.email,
+    no_telfon: data.petani.no_telfon,
     password : '',
     password_confirmation : '',
     id : data.petani.id,
@@ -27,6 +29,7 @@ console.log(petani);
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{data.header}}</h2>
+            <BackButton/>
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -58,6 +61,19 @@ console.log(petani);
                                 autocomplete="email"
                                 v-model="petani.email"
                             />
+                        </div>
+
+                        <div class="mt-3">
+                            <InputLabel for="no_telfon" value="No Telfon" /> 
+                                <TextInput
+                                id="no_telfon"
+                                type="text"
+                                class="mt-1 block w-full capitalize"
+                                autofocus
+                                autocomplete="no_telfon"
+                                v-model="petani.no_telfon"
+                            />
+                            <InputError class="mt-2" :message="petani.errors.no_telfon" />
                         </div>
 
                         <div class="mt-3">

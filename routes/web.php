@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PetaniController;
+use App\Http\Controllers\LahanController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -69,8 +71,22 @@ Route::get('/dashboard/lahan-page/manage/{id}',[AdminController::class, 'manageL
 Route::get('/dashboard/lahan-page/manage/lahan/{id}',[AdminController::class, 'lahanPekerjaan'])->name('lahanPekerjaan.view')->middleware(['middleware' => 'role:admin']);
 Route::get('/dashboard/lahan-page/edit/{id}',[AdminController::class, 'editPemilikLahan'])->name('lahanpage.edit')->middleware(['middleware' => 'role:admin']);
 Route::delete('deletelahan/{id}',[AdminController::class, 'deleteLahan'])->name('deleteLahan')->middleware(['middleware' => 'role:admin']);
+Route::delete('hapusPekerjaan',[AdminController::class, 'deletePekerjaan'])->name('hapusPekerjaan')->middleware(['middleware' => 'role:admin']);
+Route::delete('deletePetaniLahan',[AdminController::class, 'deletePetaniLahan'])->name('deletePetaniLahan')->middleware(['middleware' => 'role:admin']);
+Route::put('updatePekerjaan',[AdminController::class, 'updatePekerjaan'])->name('updatePekerjaan')->middleware(['middleware' => 'role:admin']);
+Route::post('addPekerjaan',[AdminController::class, 'addPekerjaan'])->name('addPekerjaan')->middleware(['middleware' => 'role:admin']);
+Route::post('addPetani',[AdminController::class, 'addPetani'])->name('addPetani')->middleware(['middleware' => 'role:admin']);
+Route::delete('destroyLahan',[AdminController::class, 'deleteLahanPartial'])->name('destroyLahan')->middleware(['middleware' => 'role:admin']);
 Route::get('/maps/{id}',[AdminController::class, 'mapsLahan'])->name('mapsLahan.view')->middleware(['middleware' => 'auth']);
 Route::post('insertLahan',[AdminController::class, 'insertLahan'])->name('insertLahan')->middleware(['middleware' => 'role:admin']);
 Route::get('/dashboard/tambah-lahan/{id}',[AdminController::class, 'tambahLahan'])->name('tambahlahan')->middleware(['middleware' => 'role:admin']);
+
+//petani route
+Route::get('/pekerjaan/{id}',[PetaniController::class, 'lahanPekerjaan'])->name('lahanPekerjaan.view')->middleware(['middleware' => 'role:petani']);
+Route::post('checkpekerjaan',[PetaniController::class, 'checkPekerjaan'])->name('checkPekerjaan')->middleware(['middleware' => 'role:petani']);
+
+//pemilik lahan
+Route::get('/lahanpemilik/{id}',[LahanController::class, 'lahanPekerjaan'])->name('lahanPekerjaan.view')->middleware(['middleware' => 'role:pemilik_lahan']);
+
 require __DIR__.'/auth.php';
 

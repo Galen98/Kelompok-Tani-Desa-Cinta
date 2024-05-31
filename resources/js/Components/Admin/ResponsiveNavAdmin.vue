@@ -4,7 +4,7 @@ import ResponsiveNavLink from '../ResponsiveNavLink.vue';
 
 <template>
 <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                Dashboard
+                Home Page
 </ResponsiveNavLink>
 
 <ResponsiveNavLink :href="route('petanipage.view')" :active="route().current('petanipage.view')">

@@ -6,7 +6,7 @@ import NavLink from '../NavLink.vue';
 <template>
 <!-- Navigation Links -->
      <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-        Dashboard
+        Home Page
        </NavLink>
 
        <NavLink :href="route('petanipage.view')" :active="route().current('petanipage.view')">

@@ -6,6 +6,8 @@ import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
 import Swal from 'sweetalert2'
 import { onMounted, ref } from 'vue';
+import BackButton from '@/Components/BackButton.vue';
+
 
 const data = usePage().props;
 const showToast = () => {
@@ -84,6 +86,7 @@ console.log(data);
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{data.header}}</h2>
+            <BackButton/>
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

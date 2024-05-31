@@ -6,6 +6,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
+import BackButton from '@/Components/BackButton.vue';
 
 const Page = usePage().props;
 
@@ -20,6 +21,7 @@ console.log(roles)
 const form = useForm({
     name: '',
     email: '',
+    no_telfon: '',
     password: '',
     password_confirmation: '',
     role: roles.role
@@ -51,6 +53,22 @@ const submit = () => {
                 />
 
                 <InputError class="mt-2" :message="form.errors.name" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="no_telfon" value="Nomor Telfon" />
+
+                <TextInput
+                    id="no_telfon"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.no_telfon"
+                    required
+                    autofocus
+                    autocomplete="no_telfon"
+                />
+
+                <InputError class="mt-2" :message="form.errors.no_telfon" />
             </div>
 
             <div class="mt-4">
@@ -114,7 +132,6 @@ const submit = () => {
                 >
                     Already registered?
                 </Link> -->
-
                 <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Register
                 </PrimaryButton>

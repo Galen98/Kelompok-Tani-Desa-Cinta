@@ -51,6 +51,69 @@ class AdminController extends Controller
                 'datas' => $datas
             ]);
         }
+
+        if(auth()->user()->role == 'petani') {
+            $user_id = auth()->user()->id;
+            $pekerjaan = PekerjaanLahan::where('users_id', $user_id)->pluck('lahan_id'); 
+            $datas = [];
+            foreach ($pekerjaan as $lahan_id) {
+                $totalPekerjaan = ProgressPekerjaanLahan::where('lahan_id', $lahan_id)->count();
+                $pekerjaanSelesai = ProgressPekerjaanLahan::where('lahan_id', $lahan_id)->where('status', 1)->count();
+        
+                if ($totalPekerjaan > 0) {
+                    $persentasePekerjaan = ($pekerjaanSelesai / $totalPekerjaan) * 100;
+                } else {
+                    $persentasePekerjaan = 0;
+                }
+        
+                $lahan = Lahan::find($lahan_id);
+                $user_id = $lahan->users_id;
+                $pemilik = User::find($user_id);
+                $datas[] = [
+                    'pemilik' => $pemilik,
+                    'lahan' => $lahan,
+                    'persentasePekerjaan' => $persentasePekerjaan
+                ];
+                usort($datas, function($a, $b) {
+                    return $a['persentasePekerjaan'] <=> $b['persentasePekerjaan'];
+                });
+            }
+        
+            return Inertia::render('Dashboard', [
+                'datas' => $datas
+            ]);
+        }
+        
+        if(auth()->user()->role == 'pemilik_lahan') {
+            $datas = [];
+            $pemiliklahan = User::where('id', auth()->user()->id)->get();
+            foreach($pemiliklahan as $pemilik){
+                $lahan = $pemilik->lahan;
+
+                foreach($lahan as $l){
+                    $totalPekerjaan = $l->progressPekerjaanLahan()->count();
+                    $pekerjaanSelesai = $l->progressPekerjaanLahan()->where('status', 1)->count();
+
+                    if ($totalPekerjaan > 0) {
+                        $persentasePekerjaan = ($pekerjaanSelesai / $totalPekerjaan) * 100;
+                    } else {
+                        $persentasePekerjaan = 0;
+                    }
+                    
+                    $datas[] = [
+                        'pemilik' => $pemilik,
+                        'lahan' => $l,
+                        'persentasePekerjaan' => $persentasePekerjaan
+                    ];
+                }
+                usort($datas, function($a, $b) {
+                    return $a['persentasePekerjaan'] <= $b['persentasePekerjaan'];
+                });
+            }
+            return Inertia::render('Dashboard', [
+                'datas' => $datas
+            ]);
+        }
     }
 
     //approve pekerjaan
@@ -84,12 +147,14 @@ class AdminController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'no_telfon' => 'required|numeric',
             'role' => 'required'
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'no_telfon' => $request->no_telfon,
             'password' => Hash::make($request->password),
             'role' => $request->role
         ]);
@@ -130,10 +195,12 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'no_telfon' => 'numeric',
         ]);
 
         $user = User::where('id', $request->id)->update([
             'name' => $request->name,
+            'no_telfon' => $request->no_telfon,
             'password' => Hash::make($request->password)
         ]);
 
@@ -296,14 +363,18 @@ class AdminController extends Controller
 
     //manage pekerjaan
     public function lahanPekerjaan($id) {
-        $lahan = Lahan::where('id', $id)->first();
+        $lahan = Lahan::where('id', $id)->with('users')->first();
         $pekerjaan = ProgressPekerjaanLahan::where('lahan_id', $id)->get();
         $petani = PekerjaanLahan::where('lahan_id', $id)->with('users')->get();
+        $listpetani = User::where('role', 'petani')
+        ->select('*', DB::raw('(SELECT COUNT(*) FROM pekerjaan_lahan WHERE pekerjaan_lahan.users_id = users.id) AS jumlah_pekerjaan'))
+        ->get();
 
         return Inertia::render('Admin/Lahan',[
             'lahan' => $lahan,
             'pekerjaan' => $pekerjaan,
-            'petani' => $petani
+            'petani' => $petani,
+            'listpetani' => $listpetani
         ]);
     }
 
@@ -334,5 +405,62 @@ class AdminController extends Controller
             'header' => 'Maps',
             'lahan' => $lahan
         ]);
+    }
+
+    //delete lahan partial 
+    public function deleteLahanPartial(Request $request) {
+        $id = $request->id;
+        $usersid = $request->users_id;
+        Lahan::where('id', $id)->delete();
+        PekerjaanLahan::where('lahan_id', $id)->delete();
+        ProgressPekerjaanLahan::where('lahan_id', $id)->delete();
+        return redirect('/dashboard/lahan-page/manage/'.$usersid)->with('status', 'Lahan berhasil dihapus');
+    }
+
+    //add pekerjaan
+    public function addPekerjaan(Request $request) {
+        $id = $request->lahan_id;
+        ProgressPekerjaanLahan::where('lahan_id', $id)->create([
+            'deskripsi' => $request->deskripsi,
+            'lahan_id' => $id,
+            'status' => 0
+        ]);
+        return redirect()->back();
+    }
+
+    //delete pekerjaan
+    public function deletePekerjaan(Request $request) {
+        $id = $request->id;
+        ProgressPekerjaanLahan::where('id', $id)->delete();
+        return redirect()->back();
+    }
+
+    //update pekerjaan
+    public function updatePekerjaan(Request $request) {
+        $id = $request->id;
+        $deskripsi = $request->deskripsi;
+        ProgressPekerjaanLahan::where('id', $id)->update([
+            'deskripsi' => $deskripsi
+        ]);
+        return redirect()->back();
+    }
+
+    //add petani
+    public function addPetani(Request $request) {
+        $lahan_id = $request->lahan_id;
+        $users_id = $request->users_id;
+
+        PekerjaanLahan::create([
+            'lahan_id' => $lahan_id,
+            'users_id' => $users_id
+        ]);
+        return redirect()->back();
+    }
+
+    //delete petani
+    public function deletePetaniLahan(Request $request) {
+        $id = $request->id;
+        PekerjaanLahan::where('id', $id)->delete();
+        return redirect()->back();
     }
 }

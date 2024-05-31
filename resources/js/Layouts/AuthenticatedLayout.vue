@@ -8,7 +8,10 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link, usePage } from '@inertiajs/vue3';
 import NavAdmin from '@/Components/Admin/NavAdmin.vue';
 import ResponsiveNavAdmin from '@/Components/Admin/ResponsiveNavAdmin.vue';
-
+import NavPetani from '@/Components/Petani/NavPetani.vue';
+import ResponsiveNavPetani from '@/Components/Petani/ResponsiveNavPetani.vue';
+import NavLahan from '@/Components/Lahan/NavLahan.vue';
+import ResponsiveNavLahan from '@/Components/Lahan/ResponsiveNavLahan.vue';
 const showingNavigationDropdown = ref(false);
 const user = usePage().props.auth.user.role;
 
@@ -33,6 +36,12 @@ const user = usePage().props.auth.user.role;
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="user === 'admin'"> 
                             <NavAdmin/>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="user === 'petani'"> 
+                            <NavPetani/>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="user === 'pemilik_lahan'"> 
+                            <NavLahan/>
                             </div>
                         </div>
 
@@ -114,6 +123,14 @@ const user = usePage().props.auth.user.role;
                 >
                     <div class="pt-2 pb-3 space-y-1" v-if="user === 'admin'">
                         <ResponsiveNavAdmin/>
+                    </div>
+
+                    <div class="pt-2 pb-3 space-y-1" v-if="user === 'petani'">
+                        <ResponsiveNavPetani/>
+                    </div>
+
+                    <div class="pt-2 pb-3 space-y-1" v-if="user === 'pemilik_lahan'">
+                        <ResponsiveNavLahan/>
                     </div>
 
                     <!-- Responsive Settings Options -->

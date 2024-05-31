@@ -5,15 +5,34 @@ import Swal from 'sweetalert2';
 import { format } from "date-fns";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import LahanPekerjaan from '@/Components/Admin/LahanPekerjaan.vue';
+import BackButton from '@/Components/BackButton.vue'
 
 const data = usePage().props;
+const message = data.session.status;
 const prop = defineProps({
     lahan :{
         type:Object,
         default: () => ({})
     }
 })
-console.log(prop.lahan);
+if(message !== null){
+    onMounted(() => {
+        showToast()
+    })
+}
+
+const showToast = () => {
+  Swal.fire({
+    icon: 'success',
+    title: 'Sukses!',
+    text: message,
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+  });
+};
+console.log(data)
 </script>
 
 <template>
@@ -21,6 +40,7 @@ console.log(prop.lahan);
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Kelola Lahan {{ data.pemilik.name }}</h2>
+            <BackButton/>
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

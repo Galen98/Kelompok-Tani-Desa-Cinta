@@ -6,6 +6,8 @@ import Loading from '@/Components/Loading.vue';
 import Swal from 'sweetalert2';
 import { onMounted } from 'vue';
 import DashboardAdmin from '@/Components/Admin/DashboardAdmin.vue'
+import DashboardPetani from '@/Components/Petani/DashboardPetani.vue';
+import DashboardPemilikLahan from '@/Components/Lahan/DashboardPemilikLahan.vue';
 
 const thisPage = usePage().props.datas;
 const Page = usePage().props;
@@ -40,7 +42,7 @@ console.log(user)
     <AuthenticatedLayout>
         <Loading v-if="isLoading"/>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Home Page</h2>
         </template>
 
         <div class="py-12">
@@ -50,9 +52,17 @@ console.log(user)
                     <div v-if="user == 'admin'">
                     <DashboardAdmin/>
                     </div>
+
+                    <div v-if="user == 'petani'">
+                    <DashboardPetani/>
+                    </div>
+
+                    <div v-if="user == 'pemilik_lahan'">
+                    <DashboardPemilikLahan/>
+                    </div>
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
     </AuthenticatedLayout>
 </template>

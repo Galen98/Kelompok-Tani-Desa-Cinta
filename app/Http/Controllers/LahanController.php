@@ -17,25 +17,16 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\DB;
 
-class PetaniController extends Controller
+class LahanController extends Controller
 {
     public function lahanPekerjaan($id) {
         $lahan = Lahan::where('id', $id)->with('users')->first();
         $pekerjaan = ProgressPekerjaanLahan::where('lahan_id', $id)->get();
         $petani = PekerjaanLahan::where('lahan_id', $id)->with('users')->get();
-        return Inertia::render('Petani/Lahan', [
+        return Inertia::render('Lahan/Lahan', [
             'lahan' => $lahan,
             'pekerjaan' => $pekerjaan,
             'petani' => $petani
-        ]);
-    }
-
-    public function checkPekerjaan(Request $request) {
-        $check = $request->check;
-        $id = $request->id;
-        ProgressPekerjaanLahan::where('id', $id)->update([
-            'status' => $check,
-            'pekerjaan_selesai' => Carbon::now()
         ]);
     }
 }

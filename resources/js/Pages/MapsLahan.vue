@@ -5,6 +5,7 @@ import '@maptiler/sdk/dist/maptiler-sdk.css';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
+import BackButton from '@/Components/BackButton.vue'
 
 const page = usePage()
 const lahan = computed(() => page.props.lahan)
@@ -54,6 +55,7 @@ onUnmounted(() => {
     <Head title="Maps" />
     <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight capitalize">Maps {{ lahan.namalahan }}</h2>
+            <BackButton/>
         </template>
         <!-- <iframe width="500" height="300" src="https://api.maptiler.com/maps/basic-v2/?key=11cC3TK0yMK9WTqiXQnU#1.0/0.00000/0.00000"></iframe> -->
         <div class="py-0">
