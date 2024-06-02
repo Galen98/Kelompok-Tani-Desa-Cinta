@@ -19,6 +19,12 @@ return new class extends Migration
             $table->integer('users_id');
             $table->decimal('latitude',9,7);
             $table->decimal('longitude',10,7);
+            $table->decimal('latitude_2',9,7);
+            $table->decimal('longitude_2',10,7);
+            $table->decimal('latitude_3',9,7);
+            $table->decimal('longitude_3',10,7);
+            $table->decimal('latitude_4',9,7);
+            $table->decimal('longitude_4',10,7);
             $table->boolean('status');
             $table->timestamps('pekerjaan_selesai')->nullable();
             $table->timestamps();

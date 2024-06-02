@@ -40,6 +40,10 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+Route::get('/cobaMaps', function () {
+    return Inertia::render('MapCoba');
+});
+
 // Route::get('/dashboard', function () {
     
 //     return Inertia::render('Dashboard', [

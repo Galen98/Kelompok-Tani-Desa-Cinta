@@ -24,6 +24,12 @@ const form = useForm({
     luas_lahan : '',
     latitude: '',
     longitude : '',
+    latitude_2: '',
+    longitude_2 : '',
+    latitude_3: '',
+    longitude_3 : '',
+    latitude_4: '',
+    longitude_4 : '',
     deskripsi_pekerjaan : [],
     petani : [],
     pemilik : data.id
@@ -162,7 +168,7 @@ console.log(data);
                             </div>
 
                             <div class="mt-2">
-                            <InputLabel for="longitude" value="longitude" />
+                            <InputLabel for="longitude" value="Longitude" />
                             <TextInput
                                 id="longitude"
                                 type="text"
@@ -171,6 +177,86 @@ console.log(data);
                                 autocomplete="longitude"
                                 placeholder="Masukan longitude"
                                 v-model="form.longitude"
+                            />
+                            </div>
+
+                            <hr/>
+                            <p class="mb-1">Masukan titik untuk menentukan luas lahan</p>
+                            <div class="mt-2">
+                            <InputLabel for="latitude" value="Latitude Kedua" />
+                            <TextInput
+                                id="latitude"
+                                type="text"
+                                class="mt-1 block w-full capitalize"
+                                autofocus
+                                autocomplete="latitude"
+                                placeholder="Masukan latitude kedua"
+                                v-model="form.latitude_2"
+                            />
+                            </div>
+
+                            <div class="mt-2">
+                            <InputLabel for="longitude" value="Longitude kedua" />
+                            <TextInput
+                                id="longitude"
+                                type="text"
+                                class="mt-1 block w-full capitalize"
+                                autofocus
+                                autocomplete="longitude"
+                                placeholder="Masukan longitude kedua"
+                                v-model="form.longitude_2"
+                            />
+                            </div>
+
+                            <div class="mt-2">
+                            <InputLabel for="latitude" value="Latitude ketiga" />
+                            <TextInput
+                                id="latitude"
+                                type="text"
+                                class="mt-1 block w-full capitalize"
+                                autofocus
+                                autocomplete="latitude"
+                                placeholder="Masukan latitude ketiga"
+                                v-model="form.latitude_3"
+                            />
+                            </div>
+
+                            <div class="mt-2">
+                            <InputLabel for="longitude" value="Longitude ketiga" />
+                            <TextInput
+                                id="longitude"
+                                type="text"
+                                class="mt-1 block w-full capitalize"
+                                autofocus
+                                autocomplete="longitude"
+                                placeholder="Masukan longitude ketiga"
+                                v-model="form.longitude_3"
+                            />
+                            </div>
+
+                            <div class="mt-2">
+                            <InputLabel for="latitude" value="Latitude keempat" />
+                            <TextInput
+                                id="latitude"
+                                type="text"
+                                class="mt-1 block w-full capitalize"
+                                autofocus
+                                autocomplete="latitude"
+                                placeholder="Masukan latitude keempat"
+                                v-model="form.latitude_4"
+                            />
+                            </div>
+
+                            <div class="mt-2">
+                            <InputLabel for="longitude" value="Longitude keempat" />
+                            <TextInput
+                                id="longitude"
+                                type="text"
+                                class="mt-1 block w-full capitalize"
+                                autofocus
+                                autocomplete="longitude"
+                                placeholder="Masukan longitude keempat"
+                                v-model="form.longitude_4"
                             />
                             </div>
 

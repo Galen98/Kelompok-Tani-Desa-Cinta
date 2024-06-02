@@ -17,6 +17,12 @@ class Lahan extends Model
         'users_id',
         'latitude',
         'longitude',
+        'latitude_2',
+        'longitude_2',
+        'latitude_3',
+        'longitude_3',
+        'latitude_4',
+        'longitude_4',
         'pekerjaan_selesai',
         'status'
     ];

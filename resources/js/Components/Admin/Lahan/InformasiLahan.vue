@@ -22,6 +22,12 @@ const lahanform = useForm({
     'alamat_lahan' : prop.lahan.alamat_lahan,
     'latitude' : prop.lahan.latitude,
     'longitude' : prop.lahan.longitude,
+    'latitude_2': prop.lahan.latitude_2,
+    'longitude_2' : prop.lahan.longitude_2,
+    'latitude_3' : prop.lahan.latitude_3,
+    'longitude_3' : prop.lahan.longitude_3,
+    'latitude_4' : prop.lahan.latitude_4,
+    'longitude_4' : prop.lahan.longitude_4,
     'luas_lahan' : prop.lahan.luas_lahan
 });
 const isEdit = ref(false)
@@ -108,7 +114,7 @@ console.log(lahan)
                             <InputError :message="lahanform.errors.latitude" class="mt-2" />
                      </div>
                      <div class="mt-2">
-                            <InputLabel for="longitude" value="longitude"  />
+                            <InputLabel for="longitude" value="Longitude"  />
                             <TextInput
                                 id="longitude"
                                 type="text"
@@ -121,7 +127,96 @@ console.log(lahan)
                                 :readonly="isEdit == false"
                             />
                             <InputError :message="lahanform.errors.longitude" class="mt-2" />
-                            </div>
+                        </div>
+                        <hr/>
+                        <p class="mb-1">Edit titik untuk menentukan luas lahan</p>
+                        <div class="mt-2">
+                            <InputLabel for="latitude" value="Latitude kedua" />
+                            <TextInput
+                                id="latitude"
+                                type="text"
+                                class="mt-1 block w-full capitalize"
+                                autofocus
+                                autocomplete="latitude"
+                                placeholder="Masukan latitude"
+                                v-model="lahanform.latitude_2"
+                                :readonly="isEdit == false"
+                                :class="{'opacity-65' : isEdit == false}"
+                            />
+                     </div>
+                     <div class="mt-2">
+                            <InputLabel for="longitude" value="Longitude kedua"  />
+                            <TextInput
+                                id="longitude"
+                                type="text"
+                                class="mt-1 block w-full capitalize"
+                                :class="{'opacity-65' : isEdit == false}"
+                                autofocus
+                                autocomplete="longitude"
+                                placeholder="Masukan longitude"
+                                v-model="lahanform.longitude_2"
+                                :readonly="isEdit == false"
+                            />
+                        </div>
+
+                        <div class="mt-2">
+                            <InputLabel for="latitude" value="Latitude ketiga" />
+                            <TextInput
+                                id="latitude"
+                                type="text"
+                                class="mt-1 block w-full capitalize"
+                                autofocus
+                                autocomplete="latitude"
+                                placeholder="Masukan latitude"
+                                v-model="lahanform.latitude_3"
+                                :readonly="isEdit == false"
+                                :class="{'opacity-65' : isEdit == false}"
+                            />
+                     </div>
+                     <div class="mt-2">
+                            <InputLabel for="longitude" value="Longitude ketiga"  />
+                            <TextInput
+                                id="longitude"
+                                type="text"
+                                class="mt-1 block w-full capitalize"
+                                :class="{'opacity-65' : isEdit == false}"
+                                autofocus
+                                autocomplete="longitude"
+                                placeholder="Masukan longitude"
+                                v-model="lahanform.longitude_3"
+                                :readonly="isEdit == false"
+                            />
+                        </div>
+
+                        <div class="mt-2">
+                            <InputLabel for="latitude" value="Latitude keempat" />
+                            <TextInput
+                                id="latitude"
+                                type="text"
+                                class="mt-1 block w-full capitalize"
+                                autofocus
+                                autocomplete="latitude"
+                                placeholder="Masukan latitude"
+                                v-model="lahanform.latitude_4"
+                                :readonly="isEdit == false"
+                                :class="{'opacity-65' : isEdit == false}"
+                            />
+                     </div>
+                     <div class="mt-2">
+                            <InputLabel for="longitude" value="Longitude keempat"  />
+                            <TextInput
+                                id="longitude"
+                                type="text"
+                                class="mt-1 block w-full capitalize"
+                                :class="{'opacity-65' : isEdit == false}"
+                                autofocus
+                                autocomplete="longitude"
+                                placeholder="Masukan longitude"
+                                v-model="lahanform.longitude_4"
+                                :readonly="isEdit == false"
+                            />
+                        </div>
+
                             <div class="flex items-center gap-4" v-if="user.role == 'admin'">
                                 <button class="mt-3 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white" type="submit" :disabled="isEdit == false" :class="{'opacity-50' : isEdit == false}"
                                 >Save</button>

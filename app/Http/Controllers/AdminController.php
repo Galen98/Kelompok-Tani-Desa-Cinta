@@ -299,6 +299,12 @@ class AdminController extends Controller
             'luas_lahan' => $request->luas_lahan,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
+            'latitude_2' => $request->latitude_2,
+            'longitude_2' => $request->longitude_2,
+            'latitude_3' => $request->latitude_3,
+            'longitude_3' => $request->longitude_3,
+            'latitude_4' => $request->latitude_4,
+            'longitude_4' => $request->longitude_4,
             'status' => false
         ]);
 
@@ -393,7 +399,13 @@ class AdminController extends Controller
             'alamat_lahan' => $request->alamat_lahan,
             'luas_lahan' => $request->luas_lahan,
             'latitude' => $request->latitude,
-            'longitude' => $request->longitude
+            'longitude' => $request->longitude,
+            'latitude_2' => $request->latitude_2,
+            'longitude_2' => $request->longitude_2,
+            'latitude_3' => $request->latitude_3,
+            'longitude_3' => $request->longitude_3,
+            'latitude_4' => $request->latitude_4,
+            'longitude_4' => $request->longitude_4
         ]);
         return redirect()->back();
     }
