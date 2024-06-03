@@ -28,11 +28,45 @@ Route::get('/', function () {
     $diproses = Lahan::where('status', false)->count();
     $selesai = Lahan::where('status', true)->count();
     $lahan = Lahan::count();
+
+    $datas = [];
+    $pemiliklahan = User::where('role', 'pemilik_lahan')->get();
+    foreach($pemiliklahan as $pemilik) {
+    $lahans = $pemilik->lahan;
+
+    foreach($lahans as $l) {
+    $totalPekerjaan = $l->progressPekerjaanLahan()->count();
+    $pekerjaanSelesai = $l->progressPekerjaanLahan()->where('status', 1)->count();
+    $petani = $l->pekerjaanlahan()->count();
+
+      if ($totalPekerjaan > 0) {
+           $persentasePekerjaan = ($pekerjaanSelesai / $totalPekerjaan) * 100;
+        } else {
+            $persentasePekerjaan = 0;
+        }
+                    
+    $datas[] = [
+    'pemilik' => $pemilik,
+    'lahan' => $l,
+    'persentasePekerjaan' => $persentasePekerjaan,
+    'petani' => $petani
+        ];
+    }
+    usort($datas, function($a, $b) {
+    return $a['persentasePekerjaan'] <= $b['persentasePekerjaan'];
+    });
+    }
+
+    // $petani = [];
+    // foreach($pemiliklahan as $pemilik) {
+    //     $lahans = $
+    // }
     return Inertia::render('Welcome', [
         'petani' => $petani,
         'diproses' => $diproses,
         'selesai' => $selesai,
         'lahan' => $lahan,
+        'datas' => $datas,
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,

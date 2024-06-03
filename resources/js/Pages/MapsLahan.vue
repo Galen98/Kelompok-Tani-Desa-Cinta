@@ -10,8 +10,8 @@
     <div id="map"></div>
     </div>
     </div>
-</AuthenticatedLayout>
-  </template>
+  </AuthenticatedLayout>
+</template>
   
   <script setup>
   import maplibregl from 'maplibre-gl';
@@ -38,7 +38,7 @@
 
     map.value = new maplibregl.Map({
       container: 'map',
-      style: 'https://api.maptiler.com/maps/streets/style.json?key=MqfzhjSjqI2j7xNT4YWd',
+      style: 'https://api.maptiler.com/maps/satellite/style.json?key=MqfzhjSjqI2j7xNT4YWd',
       center: [long, lat],
       zoom: 18
     });
@@ -75,7 +75,7 @@
   
       // Add marker
       const marker = new maplibregl.Marker()
-        .setLngLat([106.614244, -6.268772])
+        .setLngLat([long, lat])
         .addTo(map.value);
     });
   });
@@ -89,7 +89,7 @@
   
   <style scoped>
   #map {
-    position: absolute;
+  position: absolute;
   width: 100%;
   height: 100%;
   }
@@ -98,6 +98,6 @@
   position: relative;
   width: 100%;
   height: calc(100vh - 77px);
-}
-  </style>
+  }
+</style>
   

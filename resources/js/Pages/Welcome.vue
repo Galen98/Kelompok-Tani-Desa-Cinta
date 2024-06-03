@@ -12,15 +12,32 @@ const data = usePage().props
 const diproses = ref(0)
 const selesai = ref(0)
 const message = data.session.status
+
+//progress pekerjaan lahan dan jumlah petani
+const lahanprogress = data.datas
+const namalahan = lahanprogress.map(item => item.lahan.namalahan);
+const jumlahpetani = lahanprogress.map(item => item.petani)
+const presentasepekerjaan = lahanprogress.map(item => item.persentasePekerjaan);
+const backgroundColorProgress = lahanprogress.map(item => 
+        item.persentasePekerjaan < 100 ? 'rgb(54, 162, 235)' : 'rgb(56, 133, 53)'
+);
+
 const chartData = {
-  labels: ['Pekerjaan Diproses', 'Pekerjaan Selesai'],
+  labels: namalahan,
   datasets: [{
     label: 'Grafik Pekerjaan Lahan',
-    data: [diproses.value = data.diproses, selesai.value = data.selesai],
-    backgroundColor: [
-      'rgb(168, 29, 42)',
-      'rgb(54, 162, 235)',
-    ],
+    data: presentasepekerjaan,
+    backgroundColor: backgroundColorProgress,
+    hoverOffset: 4
+  }]
+}
+
+const chartDataPetani = {
+  labels: namalahan,
+  datasets: [{
+    label: 'Jumlah Petani',
+    data: jumlahpetani,
+    backgroundColor: ['rgb(173, 31, 41)'],
     hoverOffset: 4
   }]
 }
@@ -28,6 +45,7 @@ const chartData = {
 const chartOptions = {
   responsive: true
 }
+
 defineProps({
     canLogin: {
         type: Boolean,
@@ -61,6 +79,7 @@ const showToast = () => {
     timer: 3000
   });
 };
+console.log(data)
 </script>
 
 <template>
@@ -87,7 +106,7 @@ const showToast = () => {
             </template>
         </div>
 
-        <div class="max-w-7xl mx-auto p-6 lg:p-8">
+        <div class="max-w-7xl mx-auto p-2 lg:p-2">
             <div class="flex justify-center">
                 <img src="https://i.ibb.co/W5dPcGR/pngtree-agriculture-wheat-template-vector-icon-design-natural-rice-farm-vector-png-image-38421048.png" alt="" class="w-40 h-40">
             </div>
@@ -113,6 +132,20 @@ const showToast = () => {
 
                     <div
                         href="https://laravel.com/docs"
+                        class="scale-100 p-6 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex"
+                    >
+                        <div>
+                            <h2 class="mb-3 mt-6 text-xl font-semibold text-gray-900 dark:text-white">Jumlah Petani Per Lahan</h2>
+                            <Bar
+                            :width="500" :height="300"
+                            id="my-chart-id"
+                            :options="chartOptions"
+                            :data="chartDataPetani"
+                            />
+                        </div>
+                    </div>
+
+                    <div
                         class="scale-100 p-6 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex"
                     >
                         <div>

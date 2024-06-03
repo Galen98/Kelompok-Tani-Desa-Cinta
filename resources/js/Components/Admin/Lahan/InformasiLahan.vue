@@ -41,6 +41,38 @@ const updateInformasiLahan = () => {
         onSuccess: () => isEdit.value = false,
     });
 };
+
+function formatRupiah(value) {
+  if (!value) return '';
+  value = value.toString().replace(/[^,\d]/g, '');
+  const numericValue = parseFloat(value.replace(',', '.'));
+  if (numericValue < 1000) {
+    return numericValue.toString().replace('.', ',');
+  }
+
+  let split = value.split(',');
+  let sisa = split[0].length % 3;
+  let rupiah = split[0].substr(0, sisa);
+  let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+  if (ribuan) {
+    let separator = sisa ? '.' : '';
+    rupiah += separator + ribuan.join('.');
+  }
+
+  rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+  return rupiah;
+}
+
+const formattedLuasLahan = computed({
+  get() {
+    return formatRupiah(lahanform.luas_lahan);
+  },
+  set(value) {
+    lahanform.luas_lahan = value.replace(/\./g, '').replace(',', '.');
+  }
+});
+
 console.log(lahan)
 </script>
 
@@ -87,12 +119,12 @@ console.log(lahan)
                             <InputLabel for="luaslahan" value="Luas Lahan dalam m&sup2;" />
                             <TextInput
                                 id="luaslahan"
-                                type="number"
+                                type="text"
                                 class="mt-1 block w-full capitalize"
                                 autofocus
                                 autocomplete="luaslahan"
                                 placeholder="Masukan luas lahan"
-                                v-model="lahanform.luas_lahan"
+                                v-model="formattedLuasLahan"
                                 :readonly="isEdit == false"
                                 :class="{'opacity-65' : isEdit == false}"
                             />

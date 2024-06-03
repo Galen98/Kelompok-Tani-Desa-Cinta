@@ -145,7 +145,7 @@ console.log(data);
                             <InputLabel for="luaslahan" value="Luas Lahan dalam m&sup2;" />
                             <TextInput
                                 id="luaslahan"
-                                type="number"
+                                type="text"
                                 class="mt-1 block w-full capitalize"
                                 autofocus
                                 autocomplete="luaslahan"
